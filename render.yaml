@@ -4,8 +4,3 @@ services:
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: AUDIENCE
-        value: "tds-xxxxxxxx.apps.exam.local"
-      - key: PUBLIC_KEY
-        value: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
