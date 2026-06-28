@@ -8,7 +8,4 @@ services:
       - key: AUDIENCE
         value: "tds-xxxxxxxx.apps.exam.local"
       - key: PUBLIC_KEY
-        value: |                              # ← paste full PEM key from panel
-          -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
-          -----END PUBLIC KEY-----
+        value: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
