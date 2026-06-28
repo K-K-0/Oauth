@@ -7,9 +7,33 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-PUBLIC_KEY = os.environ.get("PUBLIC_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA")
 AUDIENCE  = os.environ.get("AUDIENCE", "")
 ISUSER =  "https://idp.exam.local"
+
+def normalize_pem(raw: str) -> str:
+    """Fix PEM keys however Render/env vars may have mangled them."""
+    if not raw:
+        return ""
+    raw = raw.replace("\\n", "\n").strip()
+ 
+    # Already has proper newlines and headers — good to go
+    if "-----BEGIN PUBLIC KEY-----" in raw and "\n" in raw:
+        return raw
+ 
+    # Has headers but newlines collapsed into spaces
+    if "-----BEGIN PUBLIC KEY-----" in raw:
+        body = raw.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "").strip()
+        body = "".join(body.split())   # strip all whitespace
+        body = "\n".join(body[i:i+64] for i in range(0, len(body), 64))
+        return f"-----BEGIN PUBLIC KEY-----\n{body}\n-----END PUBLIC KEY-----"
+ 
+    # Raw base64 body only — wrap it
+    body = "".join(raw.split())
+    body = "\n".join(body[i:i+64] for i in range(0, len(body), 64))
+    return f"-----BEGIN PUBLIC KEY-----\n{body}\n-----END PUBLIC KEY-----"
+
+PUBLIC_KEY = normalize_pem(os.environ.get("PUBLIC_KEY", ""))
+
 
 class TokenRequest(BaseModel):
     token: str
