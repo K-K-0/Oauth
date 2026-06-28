@@ -7,7 +7,7 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-PUBLIC_KEY = os.environ.get("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA")
+PUBLIC_KEY = os.environ.get("PUBLIC_KEY", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA")
 AUDIENCE  = os.environ.get("AUDIENCE", "")
 ISUSER =  "https://idp.exam.local"
 
