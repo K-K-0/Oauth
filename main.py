@@ -8,7 +8,7 @@ app = FastAPI()
 
 
 PUBLIC_KEY = os.environ.get("PUBLIC_KEY", "")
-AUDIENCE  = os.evviron.get("AUDIENCE", "")
+AUDIENCE  = os.environ.get("AUDIENCE", "")
 ISUSER =  "https://idp.exam.local"
 
 class TokenRequest(BaseModel):
